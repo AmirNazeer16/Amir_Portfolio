@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amir Nazeer – Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { poppins: ['Poppins','sans-serif'], inter: ['Inter','sans-serif'] },
+          colors: { primary:'#2563EB', secondary:'#1E293B', accent:'#38BDF8', surface:'#0F172A', dark:'#020617' }
+        }
+      }
+    }
+  </script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#020617;color:#fff;overflow-x:hidden}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#020617}
+    ::-webkit-scrollbar-thumb{background:#2563EB;border-radius:3px}
+
+    .anim{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+    .anim.v{opacity:1;transform:translateY(0)}
+    .anim.fl{transform:translateX(-30px)}.anim.fl.v{transform:translateX(0)}
+    .anim.fr{transform:translateX(30px)}.anim.fr.v{transform:translateX(0)}
+
+    .grad{background:linear-gradient(135deg,#2563EB,#38BDF8,#2563EB);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gshift 4s ease infinite}
+    @keyframes gshift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    @keyframes pglow{0%,100%{box-shadow:0 0 15px rgba(37,99,235,.25)}50%{box-shadow:0 0 30px rgba(37,99,235,.5)}}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+    .card-h:hover{box-shadow:0 0 20px rgba(37,99,235,.12),0 12px 40px rgba(0,0,0,.3)}
+    .skill-bar{position:relative;overflow:hidden}
+    .skill-bar::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);animation:shimmer 2.5s infinite}
+
+    .nav-l{position:relative}
+    .nav-l::after{content:'';position:absolute;bottom:-4px;left:50%;width:0;height:2px;background:#2563EB;transition:width .3s;transform:translateX(-50%)}
+    .nav-l:hover::after,.nav-l.act::after{width:100%}
+
+    .toast{animation:tin .3s ease-out}
+    @keyframes tin{0%{opacity:0;transform:translateY(15px)}100%{opacity:1;transform:translateY(0)}}
+
+    .mmenu{transform:translateX(100%);transition:transform .35s ease}
+    .mmenu.open{transform:translateX(0)}
+
+    .tline{background:linear-gradient(to bottom,#2563EB,#38BDF8)}
+    .pcard{transition:transform .35s ease,box-shadow .35s ease}.pcard:hover{transform:translateY(-6px)}
+
+    section{content-visibility:auto;contain-intrinsic-size:auto 600px}
+    #home,#contact{content-visibility:visible}
+  </style>
+</head>
+<body class="font-inter">
+
+  <!-- Navigation -->
+  <nav id="nb" class="fixed top-0 left-0 w-full z-50 transition-all duration-300" style="background:rgba(2,6,23,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="font-poppins font-bold text-xl tracking-tight"><span class="grad">AN</span><span class="text-white/80">.</span></a>
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#home" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">Home</a>
+        <a href="#about" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">About</a>
+        <a href="#skills" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">Skills</a>
+        <a href="#projects" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">Projects</a>
+        <a href="#education" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">Education</a>
+        <a href="#experience" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">Experience</a>
+        <a href="#certifications" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">Certifications</a>
+        <a href="#contact" class="nav-l text-sm font-medium text-slate-300 hover:text-white transition-colors">Contact</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#contact" class="hidden md:inline-flex items-center gap-2 bg-primary hover:bg-blue-600 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200 hover:scale-105" style="box-shadow:0 0 15px rgba(37,99,235,.3)"><iconify-icon icon="lucide:mail" width="16"></iconify-icon>Hire Me</a>
+        <button id="mbtn" class="md:hidden text-white p-2" aria-label="Menu"><iconify-icon icon="lucide:menu" width="24"></iconify-icon></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mmenu" class="mmenu fixed top-0 right-0 w-72 h-full z-[60] bg-surface/95 backdrop-blur-xl border-l border-white/10 p-8 flex flex-col">
+    <button id="cmenu" class="self-end text-white/60 hover:text-white mb-8" aria-label="Close"><iconify-icon icon="lucide:x" width="24"></iconify-icon></button>
+    <div class="flex flex-col gap-6">
+      <a href="#home" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">Home</a>
+      <a href="#about" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">About</a>
+      <a href="#skills" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">Skills</a>
+      <a href="#projects" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">Projects</a>
+      <a href="#education" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">Education</a>
+      <a href="#experience" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">Experience</a>
+      <a href="#certifications" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">Certifications</a>
+      <a href="#contact" class="ml text-lg font-medium text-slate-300 hover:text-white transition-colors">Contact</a>
+    </div>
+    <div class="mt-auto flex gap-4">
+      <a href="https://github.com/Amir_Nazeer16" target="_blank" class="text-slate-400 hover:text-accent transition-colors"><iconify-icon icon="mdi:github" width="22"></iconify-icon></a>
+      <a href="#" class="text-slate-400 hover:text-accent transition-colors"><iconify-icon icon="mdi:facebook" width="22"></iconify-icon></a>
+      <a href="#" class="text-slate-400 hover:text-accent transition-colors"><iconify-icon icon="mdi:instagram" width="22"></iconify-icon></a>
+    </div>
+  </div>
+  <div id="movl" class="fixed inset-0 bg-black/50 z-[55] hidden"></div>
+
+  <!-- HOME -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-15" style="background:radial-gradient(circle,#2563EB 0%,transparent 70%)"></div>
+    <div class="relative z-10 max-w-5xl mx-auto text-center">
+      <div class="anim mb-8 flex justify-center">
+        <div class="relative">
+          <div class="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-primary/30" style="animation:pglow 3s ease infinite">
+            <img src="https://z-cdn-media.chatglm.cn/files/82a0c0b5-6d43-46b4-b2ff-b89aa518bef4.jpg?auth_key=1880764747-e6c981eba2674486b345eb101fa981c1-0-dc0b54ac6df84ab9320c63bf84eb5171" alt="Amir Nazeer" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full border-4 border-dark flex items-center justify-center"><iconify-icon icon="lucide:check" width="14" class="text-white"></iconify-icon></div>
+        </div>
+      </div>
+      <div class="anim mb-6"><span class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-accent text-xs font-semibold px-4 py-2 rounded-full uppercase tracking-widest"><iconify-icon icon="lucide:sparkles" width="14"></iconify-icon>Available for Opportunities</span></div>
+      <h1 class="anim font-poppins font-bold text-4xl md:text-7xl leading-[1.1] tracking-tight mb-6">Hi, I'm <span class="grad">Amir Nazeer</span></h1>
+      <p class="anim text-lg md:text-2xl text-slate-400 font-light max-w-2xl mx-auto mb-4">Software Developer &amp; AI Enthusiast</p>
+      <p class="anim text-sm md:text-base text-slate-500 max-w-xl mx-auto mb-10 leading-relaxed">Passionate about building intelligent mobile and web applications, exploring machine learning, and turning ideas into impactful digital solutions.</p>
+      <div class="anim flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#projects" class="inline-flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium px-7 py-3.5 rounded-xl transition-all duration-200 hover:scale-105 text-sm" style="box-shadow:0 0 20px rgba(37,99,235,.35)"><iconify-icon icon="lucide:folder-open" width="18"></iconify-icon>View Projects</a>
+        <!-- ✅ REAL RESUME DOWNLOAD - links to resume.pdf in same folder -->
+        <a href="./resume.pdf" download="Amir_Nazeer_Resume.pdf" class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium px-7 py-3.5 rounded-xl transition-all duration-200 hover:scale-105 text-sm"><iconify-icon icon="lucide:download" width="18"></iconify-icon>Download Resume</a>
+        <a href="#contact" class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium px-7 py-3.5 rounded-xl transition-all duration-200 hover:scale-105 text-sm"><iconify-icon icon="lucide:mail" width="18"></iconify-icon>Contact Me</a>
+      </div>
+      <div class="anim flex items-center justify-center gap-5 mt-10">
+        <a href="https://github.com/Amir_Nazeer16" target="_blank" class="text-slate-500 hover:text-accent transition-colors" aria-label="GitHub"><iconify-icon icon="mdi:github" width="24"></iconify-icon></a>
+        <a href="#" class="text-slate-500 hover:text-accent transition-colors" aria-label="Facebook"><iconify-icon icon="mdi:facebook" width="24"></iconify-icon></a>
+        <a href="#" class="text-slate-500 hover:text-accent transition-colors" aria-label="Instagram"><iconify-icon icon="mdi:instagram" width="24"></iconify-icon></a>
+      </div>
+      <div class="anim mt-14"><a href="#about" class="inline-flex flex-col items-center text-slate-600 hover:text-slate-400 transition-colors"><span class="text-xs uppercase tracking-widest mb-2">Scroll Down</span><iconify-icon icon="lucide:chevron-down" width="20" class="animate-bounce"></iconify-icon></a></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="anim inline-block text-xs font-semibold text-accent uppercase tracking-widest mb-4">Get to Know Me</span>
+        <h2 class="anim font-poppins font-bold text-3xl md:text-5xl tracking-tight">About <span class="grad">Me</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div class="anim fl relative">
+          <div class="relative rounded-2xl overflow-hidden border border-white/10" style="box-shadow:0 15px 40px rgba(0,0,0,.3)">
+            <img src="https://picsum.photos/seed/amir-dev-workspace/600/700.jpg" alt="Amir at work" class="w-full h-auto object-cover" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent"></div>
+          </div>
+          <div class="absolute -bottom-4 -right-4 md:bottom-6 md:right-6 bg-surface border border-white/10 rounded-xl p-4" style="animation:float 4s ease-in-out infinite;backdrop-filter:blur(12px)">
+            <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center"><iconify-icon icon="lucide:code-2" width="20" class="text-accent"></iconify-icon></div><div><div class="text-white font-semibold text-sm">BSCS Graduate</div><div class="text-slate-500 text-xs">2026</div></div></div>
+          </div>
+        </div>
+        <div class="anim fr">
+          <h3 class="font-poppins font-semibold text-2xl mb-6 text-white">Crafting Digital Experiences with <span class="text-accent">Passion</span></h3>
+          <p class="text-slate-400 leading-relaxed mb-6">I'm Amir Nazeer, a dedicated software developer with a strong foundation in mobile app development, web technologies, and artificial intelligence. I completed my BSCS from UAF Sub Campus Burewala and I'm passionate about writing clean, efficient code.</p>
+          <p class="text-slate-400 leading-relaxed mb-6">My journey in tech started with a curiosity for how things work, which led me to explore programming, machine learning, and full-stack development. I enjoy tackling complex problems and turning creative ideas into functional, user-friendly applications.</p>
+          <p class="text-slate-400 leading-relaxed mb-8">When I'm not coding, you'll find me exploring new technologies, building side projects, or learning about the latest in AI.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center card-h transition-all duration-300"><div class="text-2xl font-bold grad font-poppins">10+</div><div class="text-xs text-slate-500 mt-1">Projects</div></div>
+            <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center card-h transition-all duration-300"><div class="text-2xl font-bold grad font-poppins">5+</div><div class="text-xs text-slate-500 mt-1">Certifications</div></div>
+            <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center card-h transition-all duration-300"><div class="text-2xl font-bold grad font-poppins">3+</div><div class="text-xs text-slate-500 mt-1">Internships</div></div>
+            <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center card-h transition-all duration-300"><div class="text-2xl font-bold grad font-poppins">2+</div><div class="text-xs text-slate-500 mt-1">Years Exp</div></div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-primary/10 text-accent text-xs font-medium px-3 py-1.5 rounded-lg">🤖 AI & ML</span>
+            <span class="bg-primary/10 text-accent text-xs font-medium px-3 py-1.5 rounded-lg">📱 Mobile Dev</span>
+            <span class="bg-primary/10 text-accent text-xs font-medium px-3 py-1.5 rounded-lg">🌐 Web Tech</span>
+            <span class="bg-primary/10 text-accent text-xs font-medium px-3 py-1.5 rounded-lg">📊 Data Science</span>
+            <span class="bg-primary/10 text-accent text-xs font-medium px-3 py-1.5 rounded-lg">🚀 Open Source</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="anim inline-block text-xs font-semibold text-accent uppercase tracking-widest mb-4">What I Know</span>
+        <h2 class="anim font-poppins font-bold text-3xl md:text-5xl tracking-tight">My <span class="grad">Skills</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-3 mb-6"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center"><iconify-icon icon="lucide:code" width="22" class="text-accent"></iconify-icon></div><h3 class="font-poppins font-semibold text-lg">Programming Languages</h3></div><div class="space-y-4"><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Python</span><span class="text-accent">90%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:90%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Java</span><span class="text-accent">80%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:80%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">C++</span><span class="text-accent">70%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:70%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Dart</span><span class="text-accent">85%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:85%"></div></div></div></div></div>
+
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-3 mb-6"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center"><iconify-icon icon="lucide:smartphone" width="22" class="text-accent"></iconify-icon></div><h3 class="font-poppins font-semibold text-lg">Mobile Development</h3></div><div class="space-y-4"><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Flutter</span><span class="text-accent">90%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:90%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Firebase</span><span class="text-accent">85%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:85%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">REST APIs</span><span class="text-accent">80%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:80%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">State Management</span><span class="text-accent">75%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:75%"></div></div></div></div></div>
+
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-3 mb-6"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center"><iconify-icon icon="lucide:globe" width="22" class="text-accent"></iconify-icon></div><h3 class="font-poppins font-semibold text-lg">Web Development</h3></div><div class="space-y-4"><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">HTML</span><span class="text-accent">95%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:95%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">CSS</span><span class="text-accent">85%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:85%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">JavaScript</span><span class="text-accent">80%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:80%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Responsive Design</span><span class="text-accent">88%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:88%"></div></div></div></div></div>
+
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-3 mb-6"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center"><iconify-icon icon="lucide:brain" width="22" class="text-accent"></iconify-icon></div><h3 class="font-poppins font-semibold text-lg">Data Science & AI</h3></div><div class="space-y-4"><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Machine Learning</span><span class="text-accent">80%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:80%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Data Analysis</span><span class="text-accent">75%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:75%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Deep Learning</span><span class="text-accent">70%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:70%"></div></div></div><div><div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">NLP</span><span class="text-accent">65%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar h-full rounded-full bg-gradient-to-r from-primary to-accent" style="width:65%"></div></div></div></div></div>
+
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-3 mb-6"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center"><iconify-icon icon="lucide:wrench" width="22" class="text-accent"></iconify-icon></div><h3 class="font-poppins font-semibold text-lg">Tools & Platforms</h3></div><div class="grid grid-cols-2 gap-3"><div class="flex items-center gap-2 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors"><iconify-icon icon="mdi:git" width="20" class="text-orange-400"></iconify-icon><span class="text-sm text-slate-300">Git</span></div><div class="flex items-center gap-2 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors"><iconify-icon icon="mdi:github" width="20" class="text-white"></iconify-icon><span class="text-sm text-slate-300">GitHub</span></div><div class="flex items-center gap-2 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors"><iconify-icon icon="lucide:code-2" width="20" class="text-blue-400"></iconify-icon><span class="text-sm text-slate-300">VS Code</span></div><div class="flex items-center gap-2 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors"><iconify-icon icon="mdi:android-studio" width="20" class="text-green-400"></iconify-icon><span class="text-sm text-slate-300">Android Studio</span></div><div class="flex items-center gap-2 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors"><iconify-icon icon="mdi:firebase" width="20" class="text-yellow-400"></iconify-icon><span class="text-sm text-slate-300">Firebase</span></div><div class="flex items-center gap-2 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors"><iconify-icon icon="mdi:docker" width="20" class="text-blue-300"></iconify-icon><span class="text-sm text-slate-300">Docker</span></div></div></div>
+
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-3 mb-6"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center"><iconify-icon icon="lucide:users" width="22" class="text-accent"></iconify-icon></div><h3 class="font-poppins font-semibold text-lg">Soft Skills</h3></div><div class="flex flex-wrap gap-2"><span class="bg-primary/10 text-accent text-xs font-medium px-3 py-2 rounded-lg">Problem Solving</span><span class="bg-primary/10 text-accent text-xs font-medium px-3 py-2 rounded-lg">Team Leadership</span><span class="bg-primary/10 text-accent text-xs font-medium px-3 py-2 rounded-lg">Communication</span><span class="bg-primary/10 text-accent text-xs font-medium px-3 py-2 rounded-lg">Critical Thinking</span><span class="bg-primary/10 text-accent text-xs font-medium px-3 py-2 rounded-lg">Time Management</span><span class="bg-primary/10 text-accent text-xs font-medium px-3 py-2 rounded-lg">Adaptability</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="anim inline-block text-xs font-semibold text-accent uppercase tracking-widest mb-4">My Work</span>
+        <h2 class="anim font-poppins font-bold text-3xl md:text-5xl tracking-tight">Featured <span class="grad">Projects</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="anim pcard group bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden card-h hover:border-primary/20"><div class="relative overflow-hidden h-52"><img src="https://picsum.photos/seed/local-rates-market/600/350.jpg" alt="Local Rates" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy"><div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent"></div><div class="absolute top-4 right-4 flex gap-2"><span class="bg-primary/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">Web</span><span class="bg-green-500/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">Live</span></div></div><div class="p-6"><h3 class="font-poppins font-semibold text-xl mb-3 group-hover:text-accent transition-colors">Local Rates</h3><p class="text-slate-400 text-sm leading-relaxed mb-4">A web application providing up-to-date local market rates for various commodities. Helps users track prices and compare trends.</p><div class="flex flex-wrap gap-2 mb-5"><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">HTML</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">CSS</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">JavaScript</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">GitHub Pages</span></div><div class="flex gap-3"><a href="https://github.com/Amir_Nazeer16/local-rates" target="_blank" class="inline-flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-accent text-xs font-medium px-4 py-2 rounded-lg transition-colors"><iconify-icon icon="lucide:github" width="14"></iconify-icon>Code</a><a href="https://amirnazeer16.github.io/local-rates/" target="_blank" class="inline-flex items-center gap-2 bg-accent/10 hover:bg-accent/20 text-accent text-xs font-medium px-4 py-2 rounded-lg transition-colors"><iconify-icon icon="lucide:external-link" width="14"></iconify-icon>Live Demo</a></div></div></div>
+
+        <div class="anim pcard group bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden card-h hover:border-primary/20"><div class="relative overflow-hidden h-52"><img src="https://picsum.photos/seed/prompt-vault-ai/600/350.jpg" alt="Prompt Vault" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy"><div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent"></div><div class="absolute top-4 right-4 flex gap-2"><span class="bg-primary/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">AI</span><span class="bg-accent/80 backdrop-blur-sm text-dark text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">Live</span></div></div><div class="p-6"><h3 class="font-poppins font-semibold text-xl mb-3 group-hover:text-accent transition-colors">Prompt Vault</h3><p class="text-slate-400 text-sm leading-relaxed mb-4">An AI prompt library website for discovering, saving, and organizing effective prompts with categorized search.</p><div class="flex flex-wrap gap-2 mb-5"><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">HTML</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">CSS</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">JavaScript</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">GitHub Pages</span></div><div class="flex gap-3"><a href="https://github.com/Amir_Nazeer16/prompt-vault" target="_blank" class="inline-flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-accent text-xs font-medium px-4 py-2 rounded-lg transition-colors"><iconify-icon icon="lucide:github" width="14"></iconify-icon>Code</a><a href="https://amirnazeer16.github.io/prompt-vault/" target="_blank" class="inline-flex items-center gap-2 bg-accent/10 hover:bg-accent/20 text-accent text-xs font-medium px-4 py-2 rounded-lg transition-colors"><iconify-icon icon="lucide:external-link" width="14"></iconify-icon>Live Demo</a></div></div></div>
+
+        <div class="anim pcard group bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden card-h hover:border-primary/20"><div class="relative overflow-hidden h-52"><img src="https://picsum.photos/seed/house-price-ml-data/600/350.jpg" alt="House Price Prediction" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy"><div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent"></div><div class="absolute top-4 right-4 flex gap-2"><span class="bg-primary/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">ML</span><span class="bg-purple-500/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">Python</span></div></div><div class="p-6"><h3 class="font-poppins font-semibold text-xl mb-3 group-hover:text-accent transition-colors">House Price Prediction System</h3><p class="text-slate-400 text-sm leading-relaxed mb-4">A machine learning system predicting house prices based on features like location, size, and market trends.</p><div class="flex flex-wrap gap-2 mb-5"><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Python</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Scikit-learn</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Pandas</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Flask</span></div><div class="flex gap-3"><a href="https://github.com/Amir_Nazeer16" target="_blank" class="inline-flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-accent text-xs font-medium px-4 py-2 rounded-lg transition-colors"><iconify-icon icon="lucide:github" width="14"></iconify-icon>Code</a></div></div></div>
+
+        <div class="anim pcard group bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden card-h hover:border-primary/20"><div class="relative overflow-hidden h-52"><img src="https://picsum.photos/seed/flutter-app-mobile/600/350.jpg" alt="Flutter Apps" class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105" loading="lazy"><div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent"></div><div class="absolute top-4 right-4 flex gap-2"><span class="bg-primary/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">Flutter</span><span class="bg-purple-500/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase">Mobile</span></div></div><div class="p-6"><h3 class="font-poppins font-semibold text-xl mb-3 group-hover:text-accent transition-colors">Flutter Mobile Applications</h3><p class="text-slate-400 text-sm leading-relaxed mb-4">Cross-platform mobile apps built with Flutter featuring beautiful UI, Firebase integration, and smooth animations.</p><div class="flex flex-wrap gap-2 mb-5"><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Flutter</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Dart</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Firebase</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Provider</span></div><div class="flex gap-3"><a href="https://github.com/Amir_Nazeer16" target="_blank" class="inline-flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-accent text-xs font-medium px-4 py-2 rounded-lg transition-colors"><iconify-icon icon="lucide:github" width="14"></iconify-icon>Code</a></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="anim inline-block text-xs font-semibold text-accent uppercase tracking-widest mb-4">My Academic Journey</span>
+        <h2 class="anim font-poppins font-bold text-3xl md:text-5xl tracking-tight"><span class="grad">Education</span></h2>
+      </div>
+      <div class="relative">
+        <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 tline md:-translate-x-0.5"></div>
+        <div class="anim relative flex flex-col md:flex-row items-start md:items-center mb-12 group"><div class="md:w-1/2 md:pr-12 md:text-right pl-16 md:pl-0"><span class="text-accent text-xs font-semibold uppercase tracking-widest">2022 – 2026</span><h3 class="font-poppins font-semibold text-xl mt-2">Bachelor of Computer Science (BSCS)</h3><p class="text-slate-400 text-sm mt-1">UAF Sub Campus Burewala</p><p class="text-slate-500 text-sm mt-3 leading-relaxed">Specializing in Software Engineering and AI.</p><div class="flex flex-wrap gap-2 mt-3 md:justify-end"><span class="bg-primary/10 text-accent text-[10px] font-medium px-2 py-1 rounded">Data Structures</span><span class="bg-primary/10 text-accent text-[10px] font-medium px-2 py-1 rounded">Algorithms</span><span class="bg-primary/10 text-accent text-[10px] font-medium px-2 py-1 rounded">AI</span></div></div><div class="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-primary border-4 border-dark md:-translate-x-2.5 z-10 group-hover:scale-125 transition-transform" style="box-shadow:0 0 12px rgba(37,99,235,.5)"></div><div class="md:w-1/2 md:pl-12"></div></div>
+        <div class="anim relative flex flex-col md:flex-row items-start md:items-center mb-12 group"><div class="md:w-1/2 md:pr-12 md:text-right"></div><div class="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-accent border-4 border-dark md:-translate-x-2.5 z-10 group-hover:scale-125 transition-transform" style="box-shadow:0 0 12px rgba(56,189,248,.5)"></div><div class="md:w-1/2 md:pl-12 pl-16"><span class="text-accent text-xs font-semibold uppercase tracking-widest">2020 – 2022</span><h3 class="font-poppins font-semibold text-xl mt-2">Intermediate (ICS)</h3><p class="text-slate-400 text-sm mt-1">Govt. Graduate College For Boys</p><p class="text-slate-500 text-sm mt-3 leading-relaxed">Focus on Mathematics, Physics, and Computer Science.</p><div class="flex flex-wrap gap-2 mt-3"><span class="bg-primary/10 text-accent text-[10px] font-medium px-2 py-1 rounded">Mathematics</span><span class="bg-primary/10 text-accent text-[10px] font-medium px-2 py-1 rounded">Physics</span><span class="bg-primary/10 text-accent text-[10px] font-medium px-2 py-1 rounded">CS</span></div></div></div>
+        <div class="anim relative flex flex-col md:flex-row items-start md:items-center group"><div class="md:w-1/2 md:pr-12 md:text-right pl-16 md:pl-0"><span class="text-accent text-xs font-semibold uppercase tracking-widest">2018 – 2020</span><h3 class="font-poppins font-semibold text-xl mt-2">Matriculation (SSC)</h3><p class="text-slate-400 text-sm mt-1">Govt College Chichawatni</p><p class="text-slate-500 text-sm mt-3 leading-relaxed">Completed secondary education with Science group. First introduction to computers and programming.</p></div><div class="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-primary border-4 border-dark md:-translate-x-2.5 z-10 group-hover:scale-125 transition-transform" style="box-shadow:0 0 12px rgba(37,99,235,.5)"></div><div class="md:w-1/2 md:pl-12"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="anim inline-block text-xs font-semibold text-accent uppercase tracking-widest mb-4">Where I've Worked</span>
+        <h2 class="anim font-poppins font-bold text-3xl md:text-5xl tracking-tight"><span class="grad">Experience</span></h2>
+      </div>
+      <div class="space-y-8">
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4"><div><h3 class="font-poppins font-semibold text-xl">Flutter Developer Intern</h3><p class="text-accent text-sm font-medium mt-1">Tech Solutions Pvt. Ltd.</p></div><span class="text-slate-500 text-xs font-medium mt-2 md:mt-0 inline-flex items-center gap-1.5"><iconify-icon icon="lucide:calendar" width="13"></iconify-icon>Jun 2024 – Sep 2024</span></div><ul class="space-y-2 text-slate-400 text-sm leading-relaxed"><li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="16" class="text-accent mt-0.5 shrink-0"></iconify-icon>Developed and maintained cross-platform mobile applications using Flutter and Dart.</li><li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="16" class="text-accent mt-0.5 shrink-0"></iconify-icon>Integrated Firebase services for authentication, real-time database, and push notifications.</li><li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="16" class="text-accent mt-0.5 shrink-0"></iconify-icon>Collaborated with UI/UX team to implement responsive designs.</li></ul><div class="flex flex-wrap gap-2 mt-5"><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Flutter</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Dart</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Firebase</span></div></div>
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4"><div><h3 class="font-poppins font-semibold text-xl">ML Research Assistant</h3><p class="text-accent text-sm font-medium mt-1">University AI Research Lab</p></div><span class="text-slate-500 text-xs font-medium mt-2 md:mt-0 inline-flex items-center gap-1.5"><iconify-icon icon="lucide:calendar" width="13"></iconify-icon>Jan 2024 – May 2024</span></div><ul class="space-y-2 text-slate-400 text-sm leading-relaxed"><li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="16" class="text-accent mt-0.5 shrink-0"></iconify-icon>Assisted in research on deep learning models for image classification and NLP tasks.</li><li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="16" class="text-accent mt-0.5 shrink-0"></iconify-icon>Preprocessed datasets and trained models using TensorFlow and PyTorch.</li></ul><div class="flex flex-wrap gap-2 mt-5"><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Python</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">TensorFlow</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">PyTorch</span></div></div>
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20"><div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4"><div><h3 class="font-poppins font-semibold text-xl">Freelance Developer</h3><p class="text-accent text-sm font-medium mt-1">Self-Employed</p></div><span class="text-slate-500 text-xs font-medium mt-2 md:mt-0 inline-flex items-center gap-1.5"><iconify-icon icon="lucide:calendar" width="13"></iconify-icon>2023 – Present</span></div><ul class="space-y-2 text-slate-400 text-sm leading-relaxed"><li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="16" class="text-accent mt-0.5 shrink-0"></iconify-icon>Delivered mobile and web applications for clients across diverse industries.</li><li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="16" class="text-accent mt-0.5 shrink-0"></iconify-icon>Built and deployed Local Rates and Prompt Vault on GitHub Pages.</li></ul><div class="flex flex-wrap gap-2 mt-5"><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">Flutter</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">HTML/CSS</span><span class="bg-white/5 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-md">JavaScript</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="anim inline-block text-xs font-semibold text-accent uppercase tracking-widest mb-4">Verified Credentials</span>
+        <h2 class="anim font-poppins font-bold text-3xl md:text-5xl tracking-tight"><span class="grad">Certifications</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20 group"><div class="flex items-start gap-4 mb-4"><div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform"><iconify-icon icon="lucide:award" width="24" class="text-accent"></iconify-icon></div><div><h3 class="font-poppins font-semibold text-base leading-snug">Python for Data Science</h3><p class="text-slate-500 text-xs mt-1">IBM – Coursera</p></div></div><div class="flex items-center justify-between"><span class="text-slate-500 text-xs flex items-center gap-1"><iconify-icon icon="lucide:calendar" width="12"></iconify-icon>March 2024</span><a href="#" class="text-accent text-xs font-medium hover:underline flex items-center gap-1">Verify <iconify-icon icon="lucide:external-link" width="12"></iconify-icon></a></div></div>
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20 group"><div class="flex items-start gap-4 mb-4"><div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform"><iconify-icon icon="lucide:award" width="24" class="text-accent"></iconify-icon></div><div><h3 class="font-poppins font-semibold text-base leading-snug">Machine Learning Specialization</h3><p class="text-slate-500 text-xs mt-1">Stanford – Coursera</p></div></div><div class="flex items-center justify-between"><span class="text-slate-500 text-xs flex items-center gap-1"><iconify-icon icon="lucide:calendar" width="12"></iconify-icon>January 2024</span><a href="#" class="text-accent text-xs font-medium hover:underline flex items-center gap-1">Verify <iconify-icon icon="lucide:external-link" width="12"></iconify-icon></a></div></div>
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20 group"><div class="flex items-start gap-4 mb-4"><div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform"><iconify-icon icon="lucide:award" width="24" class="text-accent"></iconify-icon></div><div><h3 class="font-poppins font-semibold text-base leading-snug">Flutter Development Bootcamp</h3><p class="text-slate-500 text-xs mt-1">Udemy</p></div></div><div class="flex items-center justify-between"><span class="text-slate-500 text-xs flex items-center gap-1"><iconify-icon icon="lucide:calendar" width="12"></iconify-icon>October 2023</span><a href="#" class="text-accent text-xs font-medium hover:underline flex items-center gap-1">Verify <iconify-icon icon="lucide:external-link" width="12"></iconify-icon></a></div></div>
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20 group"><div class="flex items-start gap-4 mb-4"><div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform"><iconify-icon icon="lucide:award" width="24" class="text-accent"></iconify-icon></div><div><h3 class="font-poppins font-semibold text-base leading-snug">Deep Learning Specialization</h3><p class="text-slate-500 text-xs mt-1">deeplearning.ai – Coursera</p></div></div><div class="flex items-center justify-between"><span class="text-slate-500 text-xs flex items-center gap-1"><iconify-icon icon="lucide:calendar" width="12"></iconify-icon>July 2023</span><a href="#" class="text-accent text-xs font-medium hover:underline flex items-center gap-1">Verify <iconify-icon icon="lucide:external-link" width="12"></iconify-icon></a></div></div>
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20 group"><div class="flex items-start gap-4 mb-4"><div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform"><iconify-icon icon="lucide:award" width="24" class="text-accent"></iconify-icon></div><div><h3 class="font-poppins font-semibold text-base leading-snug">Firebase for Flutter</h3><p class="text-slate-500 text-xs mt-1">Google – Coursera</p></div></div><div class="flex items-center justify-between"><span class="text-slate-500 text-xs flex items-center gap-1"><iconify-icon icon="lucide:calendar" width="12"></iconify-icon>May 2023</span><a href="#" class="text-accent text-xs font-medium hover:underline flex items-center gap-1">Verify <iconify-icon icon="lucide:external-link" width="12"></iconify-icon></a></div></div>
+        <div class="anim bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 card-h transition-all duration-300 hover:border-primary/20 group"><div class="flex items-start gap-4 mb-4"><div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform"><iconify-icon icon="lucide:award" width="24" class="text-accent"></iconify-icon></div><div><h3 class="font-poppins font-semibold text-base leading-snug">Web Development Bootcamp</h3><p class="text-slate-500 text-xs mt-1">Udemy</p></div></div><div class="flex items-center justify-between"><span class="text-slate-500 text-xs flex items-center gap-1"><iconify-icon icon="lucide:calendar" width="12"></iconify-icon>February 2023</span><a href="#" class="text-accent text-xs font-medium hover:underline flex items-center gap-1">Verify <iconify-icon icon="lucide:external-link" width="12"></iconify-icon></a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="anim inline-block text-xs font-semibold text-accent uppercase tracking-widest mb-4">Let's Connect</span>
+        <h2 class="anim font-poppins font-bold text-3xl md:text-5xl tracking-tight">Get In <span class="grad">Touch</span></h2>
+        <p class="anim text-slate-400 mt-4 max-w-lg mx-auto text-sm leading-relaxed">Have a project in mind or just want to say hello? Fill out the form or reach out directly.</p>
+      </div>
+      <div class="grid md:grid-cols-5 gap-10">
+        <div class="md:col-span-2 space-y-5">
+          <div class="anim fl bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center shrink-0"><iconify-icon icon="lucide:mail" width="20" class="text-accent"></iconify-icon></div><div><div class="text-xs text-slate-500 mb-0.5">Email</div><div class="text-sm text-white font-medium">amirnazeer0001@gmail.com</div></div></div></div>
+          <div class="anim fl bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center shrink-0"><iconify-icon icon="lucide:phone" width="20" class="text-accent"></iconify-icon></div><div><div class="text-xs text-slate-500 mb-0.5">Phone</div><div class="text-sm text-white font-medium">0316 0723923</div></div></div></div>
+          <div class="anim fl bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 card-h transition-all duration-300 hover:border-primary/20"><div class="flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center shrink-0"><iconify-icon icon="lucide:map-pin" width="20" class="text-accent"></iconify-icon></div><div><div class="text-xs text-slate-500 mb-0.5">Location</div><div class="text-sm text-white font-medium">Chichawatni, Pakistan</div></div></div></div>
+          <div class="anim fl">
+            <p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Follow Me</p>
+            <div class="flex gap-3">
+              <a href="https://github.com/Amir_Nazeer16" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-accent hover:border-primary/20 hover:bg-primary/10 transition-all duration-200" aria-label="GitHub"><iconify-icon icon="mdi:github" width="18"></iconify-icon></a>
+              <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-accent hover:border-primary/20 hover:bg-primary/10 transition-all duration-200" aria-label="Facebook"><iconify-icon icon="mdi:facebook" width="18"></iconify-icon></a>
+              <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-accent hover:border-primary/20 hover:bg-primary/10 transition-all duration-200" aria-label="Instagram"><iconify-icon icon="mdi:instagram" width="18"></iconify-icon></a>
+            </div>
+          </div>
+        </div>
+        <div class="md:col-span-3 anim fr">
+          <form id="cform" action="https://api.web3forms.com/submit" method="POST" class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 space-y-5">
+            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+            <input type="hidden" name="subject" value="New message from Portfolio - Amir Nazeer">
+            <input type="hidden" name="from_name" value="Portfolio Contact Form">
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div><label for="name" class="text-xs text-slate-400 font-medium mb-1.5 block">Full Name *</label><input type="text" id="name" name="name" required placeholder="Your name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-primary/50 transition-colors"><span class="text-red-400 text-xs mt-1 hidden" id="name-error">Please enter your name</span></div>
+              <div><label for="email" class="text-xs text-slate-400 font-medium mb-1.5 block">Email *</label><input type="email" id="email" name="email" required placeholder="you@email.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-primary/50 transition-colors"><span class="text-red-400 text-xs mt-1 hidden" id="email-error">Please enter a valid email</span></div>
+            </div>
+            <div><label for="subject" class="text-xs text-slate-400 font-medium mb-1.5 block">Subject *</label><input type="text" id="subject" name="subject_line" required placeholder="What's this about?" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-primary/50 transition-colors"><span class="text-red-400 text-xs mt-1 hidden" id="subject-error">Please enter a subject</span></div>
+            <div><label for="message" class="text-xs text-slate-400 font-medium mb-1.5 block">Message *</label><textarea id="message" name="message" rows="5" required placeholder="Tell me about your project or idea..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-primary/50 transition-colors resize-none"></textarea><span class="text-red-400 text-xs mt-1 hidden" id="message-error">Please enter a message</span></div>
+            <button type="submit" id="sbtn" class="inline-flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium px-8 py-3.5 rounded-xl transition-all duration-200 hover:scale-105 text-sm w-full sm:w-auto justify-center" style="box-shadow:0 0 20px rgba(37,99,235,.35)"><iconify-icon icon="lucide:send" width="16"></iconify-icon>Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/[0.06] py-10 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2"><span class="font-poppins font-bold text-lg grad">AN</span><span class="text-slate-500 text-sm">© 2025 Amir Nazeer. All rights reserved.</span></div>
+      <div class="flex items-center gap-6"><a href="#home" class="text-slate-500 hover:text-white text-xs transition-colors">Home</a><a href="#about" class="text-slate-500 hover:text-white text-xs transition-colors">About</a><a href="#projects" class="text-slate-500 hover:text-white text-xs transition-colors">Projects</a><a href="#contact" class="text-slate-500 hover:text-white text-xs transition-colors">Contact</a></div>
+      <div class="flex items-center gap-3"><a href="https://github.com/Amir_Nazeer16" target="_blank" class="text-slate-600 hover:text-accent transition-colors" aria-label="GitHub"><iconify-icon icon="mdi:github" width="18"></iconify-icon></a><a href="#" class="text-slate-600 hover:text-accent transition-colors" aria-label="Facebook"><iconify-icon icon="mdi:facebook" width="18"></iconify-icon></a><a href="#" class="text-slate-600 hover:text-accent transition-colors" aria-label="Instagram"><iconify-icon icon="mdi:instagram" width="18"></iconify-icon></a></div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="btt" class="fixed bottom-6 right-6 w-11 h-11 bg-primary/80 hover:bg-primary text-white rounded-xl flex items-center justify-center z-50 transition-all duration-200 opacity-0 translate-y-4 pointer-events-none" aria-label="Back to top" style="box-shadow:0 0 15px rgba(37,99,235,.3)"><iconify-icon icon="lucide:arrow-up" width="18"></iconify-icon></button>
+
+  <!-- Toast -->
+  <div id="tc" class="fixed top-20 right-6 z-[70] space-y-3"></div>
+
+  <script>
+    // Scroll Animations
+    const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){const p=en.target.parentElement,s=Array.from(p.children).filter(c=>c.classList.contains('anim')),i=s.indexOf(en.target);setTimeout(()=>en.target.classList.add('v'),i*60);obs.unobserve(en.target)}})},{threshold:.08,rootMargin:'0px 0px -5% 0px'});
+    document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
+
+    // Navbar
+    const nb=document.getElementById('nb');
+    window.addEventListener('scroll',()=>{const y=window.scrollY;nb.style.background=y>50?'rgba(2,6,23,.95)':'rgba(2,6,23,.8)';nb.style.borderBottom=y>50?'1px solid rgba(255,255,255,.05)':'none';document.querySelectorAll('section[id]').forEach(s=>{const t=s.offsetTop-100,h=s.offsetHeight,lk=document.querySelector(`.nav-l[href="#${s.id}"]`);if(lk){const a=y>=t&&y<t+h;lk.classList.toggle('act',a);lk.style.color=a?'#fff':''}});const b=document.getElementById('btt');if(y>500){b.classList.remove('opacity-0','translate-y-4','pointer-events-none');b.classList.add('opacity-100','translate-y-0')}else{b.classList.add('opacity-0','translate-y-4','pointer-events-none');b.classList.remove('opacity-100','translate-y-0')}},{passive:true});
+    document.getElementById('btt').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // Mobile Menu
+    const mm=document.getElementById('mmenu'),mo=document.getElementById('movl');
+    const openM=()=>{mm.classList.add('open');mo.classList.remove('hidden');document.body.style.overflow='hidden'};
+    const closeM=()=>{mm.classList.remove('open');mo.classList.add('hidden');document.body.style.overflow=''};
+    document.getElementById('mbtn').addEventListener('click',openM);
+    document.getElementById('cmenu').addEventListener('click',closeM);
+    mo.addEventListener('click',closeM);
+    document.querySelectorAll('.ml').forEach(l=>l.addEventListener('click',closeM));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+
+    // Toast
+    function toast(msg,type='success'){const c=document.getElementById('tc'),t=document.createElement('div');const ic=type==='success'?'lucide:check-circle':'lucide:alert-circle',bg=type==='success'?'bg-green-500/20 border-green-500/30':'bg-red-500/20 border-red-500/30',tc2=type==='success'?'text-green-400':'text-red-400';t.className=`toast ${bg} border rounded-xl px-5 py-3 flex items-center gap-3 min-w-[260px]`;t.innerHTML=`<iconify-icon icon="${ic}" width="18" class="${tc2}"></iconify-icon><span class="text-sm ${tc2} font-medium">${msg}</span>`;c.appendChild(t);setTimeout(()=>{t.style.transition='all .3s';t.style.opacity='0';t.style.transform='translateX(20px)';setTimeout(()=>t.remove(),300)},3500)}
+
+    // Contact Form - Real submission via Web3Forms
+    const ve=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+    document.getElementById('cform').addEventListener('submit',async e=>{
+      e.preventDefault();
+      let ok=true;
+      document.querySelectorAll('[id$="-error"]').forEach(el=>el.classList.add('hidden'));
+      ['name','email','subject','message'].forEach(id=>{
+        const el=document.getElementById(id),err=document.getElementById(id+'-error');
+        const v=id==='email'?el.value.trim()&&ve(el.value):el.value.trim();
+        if(!v){err.classList.remove('hidden');el.style.borderColor='rgba(239,68,68,.5)';ok=false}
+        else el.style.borderColor='';
+      });
+      if(!ok){toast('Please fill in all required fields.','error');return}
+      const btn=document.getElementById('sbtn');
+      btn.innerHTML='<iconify-icon icon="lucide:loader-2" width="16" class="animate-spin"></iconify-icon> Sending...';
+      btn.disabled=true;
+      try{
+        const formData=new FormData(e.target);
+        const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:formData});
+        const data=await res.json();
+        if(data.success){toast("Message sent! I'll reply to your email soon. ✉️");e.target.reset()}
+        else{toast('Something went wrong. Please email me directly.','error')}
+      }catch(err){toast('Network error. Please try again.','error')}
+      btn.innerHTML='<iconify-icon icon="lucide:send" width="16"></iconify-icon> Send Message';
+      btn.disabled=false;
+    });
+
+    // Skill Bars
+    const sobs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.skill-bar').forEach((b,i)=>{const w=b.style.width;b.style.width='0%';setTimeout(()=>{b.style.transition='width 1s ease';b.style.width=w},i*120)});sobs.unobserve(e.target)}})},{threshold:.25});
+    document.querySelectorAll('#skills .card-h').forEach(c=>sobs.observe(c));
+  </script>
+</body>
+</html>
